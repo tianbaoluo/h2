@@ -99,7 +99,7 @@ impl<T> Data<T> {
         self.data
     }
 
-    pub(crate) fn head(&self) -> Head {
+    pub fn head(&self) -> Head {
         Head::new(Kind::Data, self.flags.into(), self.stream_id)
     }
 
@@ -117,7 +117,7 @@ impl<T> Data<T> {
 }
 
 impl Data<Bytes> {
-    pub(crate) fn load(head: Head, mut payload: Bytes) -> Result<Self, Error> {
+    pub fn load(head: Head, mut payload: Bytes) -> Result<Self, Error> {
         let flags = DataFlags::load(head.flag());
 
         // The stream identifier must not be zero
@@ -147,7 +147,7 @@ impl<T: Buf> Data<T> {
     /// # Panics
     ///
     /// Panics if `dst` cannot contain the data frame.
-    pub(crate) fn encode_chunk<U: BufMut>(&mut self, dst: &mut U) {
+    pub fn encode_chunk<U: BufMut>(&mut self, dst: &mut U) {
         let len = self.data.remaining();
 
         assert!(dst.remaining_mut() >= len);

@@ -108,6 +108,7 @@ macro_rules! ready {
 #[cfg_attr(feature = "unstable", allow(missing_docs))]
 mod codec;
 mod error;
+#[allow(missing_docs)]
 pub mod hpack;
 
 #[cfg(not(feature = "unstable"))]

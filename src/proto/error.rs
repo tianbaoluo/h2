@@ -32,15 +32,15 @@ impl Error {
         Self::GoAway(Bytes::new(), reason, Initiator::User)
     }
 
-    pub(crate) fn library_reset(stream_id: StreamId, reason: Reason) -> Self {
+    pub fn library_reset(stream_id: StreamId, reason: Reason) -> Self {
         Self::Reset(stream_id, reason, Initiator::Library)
     }
 
-    pub(crate) fn library_go_away(reason: Reason) -> Self {
+    pub fn library_go_away(reason: Reason) -> Self {
         Self::GoAway(Bytes::new(), reason, Initiator::Library)
     }
 
-    pub(crate) fn library_go_away_data(reason: Reason, debug_data: impl Into<Bytes>) -> Self {
+    pub fn library_go_away_data(reason: Reason, debug_data: impl Into<Bytes>) -> Self {
         Self::GoAway(debug_data.into(), reason, Initiator::Library)
     }
 
