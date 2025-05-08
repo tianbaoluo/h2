@@ -65,41 +65,41 @@ pub fn encode(src: &[u8], dst: &mut BytesMut) {
     }
 }
 
-pub fn huffman_encode(src: &[u8], dst: &mut [u8]) -> usize {
-    let mut bits: u64 = 0;
-    let mut bits_left = 40;
-
-    let mut len = 0;
-    for &b in src {
-        let (nbits, code) = ENCODE_TABLE[b as usize];
-
-        bits |= code << (bits_left - nbits);
-        bits_left -= nbits;
-
-        while bits_left <= 32 {
-            unsafe {
-                *dst.get_unchecked_mut(len) = (bits >> 32) as u8;
-                len += 1;
-            }
-            // dst.put_u8((bits >> 32) as u8);
-
-            bits <<= 8;
-            bits_left += 8;
-        }
-    }
-
-    if bits_left != 40 {
-        // This writes the EOS token
-        bits |= (1 << bits_left) - 1;
-        unsafe {
-            *dst.get_unchecked_mut(len) = (bits >> 32) as u8;
-            len += 1;
-        }
-        // dst.put_u8((bits >> 32) as u8);
-    }
-
-    len
-}
+// pub fn huffman_encode(src: &[u8], dst: &mut [u8]) -> usize {
+//     let mut bits: u64 = 0;
+//     let mut bits_left = 40;
+//
+//     let mut len = 0;
+//     for &b in src {
+//         let (nbits, code) = ENCODE_TABLE[b as usize];
+//
+//         bits |= code << (bits_left - nbits);
+//         bits_left -= nbits;
+//
+//         while bits_left <= 32 {
+//             unsafe {
+//                 *dst.get_unchecked_mut(len) = (bits >> 32) as u8;
+//                 len += 1;
+//             }
+//             // dst.put_u8((bits >> 32) as u8);
+//
+//             bits <<= 8;
+//             bits_left += 8;
+//         }
+//     }
+//
+//     if bits_left != 40 {
+//         // This writes the EOS token
+//         bits |= (1 << bits_left) - 1;
+//         unsafe {
+//             *dst.get_unchecked_mut(len) = (bits >> 32) as u8;
+//             len += 1;
+//         }
+//         // dst.put_u8((bits >> 32) as u8);
+//     }
+//
+//     len
+// }
 
 impl Decoder {
     fn new() -> Decoder {
