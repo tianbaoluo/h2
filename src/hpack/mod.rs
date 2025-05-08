@@ -2,7 +2,7 @@ mod decoder;
 mod encoder;
 pub(crate) mod header;
 pub(crate) mod huffman;
-mod table;
+pub mod table;
 
 #[cfg(test)]
 mod test;
